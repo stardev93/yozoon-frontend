@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Link from "next/link";
+import Router from "next/router";
 import classNames from "classnames";
 import { useQuery } from '@apollo/client';
 import { makeStyles } from "@material-ui/core/styles";
@@ -95,8 +95,11 @@ const ProductCard = ({ product }) => {
             <img
               src={product?.photo?.publicUrl}
               className={classes.image}
-              style={{width: '100%'}}
+              style={{width: '100%', cursor: 'pointer'}}
               alt='item'
+              onClick={()=>
+                Router.push(`/product?id=${product.id}`)
+              }
             />
           </Box>       
           <Hidden smDown>

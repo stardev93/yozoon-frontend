@@ -1,18 +1,11 @@
 import React from "react";
-// nodejs library that concatenates classes
 import classNames from "classnames";
-// react components for routing our app without refresh
 import Link from "next/link";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
-  Grid,
   Box,
-  Card,
-  Hidden
 } from '@material-ui/core';
-// @material-ui/icons
 // core components
 import HomeContainer from "components/HomeContainer";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -22,8 +15,8 @@ import BestProducts from 'pages-sections/HomePage-Sections/BestProducts';
 import NewAddedProducts from 'pages-sections/HomePage-Sections/NewAddedProducts';
 import TradingRatedProducts from 'pages-sections/HomePage-Sections/TradingRatedProducts';
 import BestSalesProducts from 'pages-sections/HomePage-Sections/BestSalesProducts';
-import useTranslation from '../hooks/useTranslation';
 import { container } from "styles/jss/nextjs-material-kit.js";
+import useTranslation from '../hooks/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   container,
@@ -217,52 +210,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const newAddedProducts = [
-  {
-    'id': 1,
-    'title': 'TEST1',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-  {
-    'id': 2,
-    'title': 'TEST2',
-    'url': '/img/products/top1.png',
-    'price': '300',
-    'symbole': '$'
-  },
-  {
-    'id': 3,
-    'title': 'TEST3',
-    'url': '/img/products/top1.png',
-    'price': '150',
-    'symbole': '$'
-  },
-  {
-    'id': 4,
-    'title': 'TEST4',
-    'url': '/img/products/top1.png',
-    'price': '1100',
-    'symbole': '$'
-  },
-  {
-    'id': 5,
-    'title': 'TEST5',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-  {
-    'id': 6,
-    'title': 'TEST6',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-]
-
-
 export default function Index() {
   const classes = useStyles();
   
@@ -297,7 +244,7 @@ export default function Index() {
           <BestProducts />
          
           <Box className={classNames(classes.container, classes.otherProducts)} >
-            <NewAddedProducts products={newAddedProducts}/>
+            <NewAddedProducts />
           </Box>
 
           <Box 
@@ -311,11 +258,11 @@ export default function Index() {
               backgroundPosition: 'center',
             }}
           >
-            <TradingRatedProducts  products={newAddedProducts}/>
+            <TradingRatedProducts />
           </Box>
 
           <Box className={classNames(classes.container, classes.otherProducts)} >
-            <BestSalesProducts products={newAddedProducts}/>
+            <BestSalesProducts />
           </Box>
         </Box>
       </HomeContainer>

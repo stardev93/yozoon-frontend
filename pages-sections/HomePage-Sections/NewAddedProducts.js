@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import Link from "next/link";
+import Router from "next/router";
 import { Box, Grid, makeStyles, useTheme, useMediaQuery, Typography, Button } from '@material-ui/core';
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import Slider from "react-slick";
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const NewAddedProducts = ({products}) => {
+const NewAddedProducts = () => {
   const classes = useStyles();
   const theme = useTheme();
   const lgDevice = useMediaQuery(theme.breakpoints.down('lg'));
@@ -81,13 +81,13 @@ const NewAddedProducts = ({products}) => {
 
   useEffect(() => {
     // other code
-    if((products?.length > 0) && products?.length < 4) {
+    if((productsData?.allProducts?.length > 0) && productsData?.allProducts?.length < 4) {
       return lgDevice ? (mdDevice ? (xsDevice ? setSlidesToShow(1) : setSlidesToShow(2)) :setSlidesToShow(1)) :setSlidesToShow(1)
-    } else if(products?.length > 3) {
+    } else if(productsData?.allProducts?.length > 3) {
       return lgDevice ? (mdDevice ? (xsDevice ? setSlidesToShow(1) : setSlidesToShow(2)) :setSlidesToShow(3)) :setSlidesToShow(4)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, lgDevice, mdDevice, xsDevice])
+  }, [productsData?.allProducts, lgDevice, mdDevice, xsDevice])
 
   return (
     <Box>
@@ -128,7 +128,14 @@ const NewAddedProducts = ({products}) => {
               <div key={i}>
                   <div className={classes.border_style}>
                     <Box position="relative">
-                      <img alt={data?.name} src={data?.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
+                      <img 
+                        alt={data?.name} 
+                        src={data?.photo?.publicUrl}  
+                        style={{width: '100%', marginTop: '15px', cursor: 'pointer'}} 
+                        onClick={()=>
+                          Router.push(`/product?id=${data.id}`)
+                        }
+                      />
                     </Box>
                     <Box display="flex" p={1} >
                       <Box p={1} style={{height:50}}>

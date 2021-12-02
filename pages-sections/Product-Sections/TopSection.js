@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TopSection = () => {
+const TopSection = ({ productData }) => {
   const classes = useStyles();
 
   useEffect(() => {
     // other code
-
+    console.log("----------------------productData", productData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [productData])
 
 
   return (
@@ -49,13 +49,13 @@ const TopSection = () => {
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-start', p: 1, m: 1 }} >
                 <Box sx={{ p: 1 }}>
-                  <p className={classes.text_16} style={{color: '#898989'}}>Laptops - Gaming Laptops</p>
+                  <p className={classes.text_16} style={{color: '#898989'}}>{productData?.category?.name} - {productData?.subCategory?.name}</p>
                 </Box>
                 <Box sx={{ p: 1}}>
                   <p className={classes.text_16}  style={{color: '#898989'}}>-</p>
                 </Box>
                 <Box sx={{ p: 1}}>
-                  <p className={classes.text_16}  style={{color: '#0c045d'}}>Product Name</p>
+                  <p className={classes.text_16}  style={{color: '#0c045d'}}>{productData?.name}</p>
                 </Box>
               </Box>
 
@@ -74,7 +74,7 @@ const TopSection = () => {
               <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', p: 1, m: 1 }} >
                 <Box sx={{ p: 1 }}>
                   <p className={classes.text_16} style={{color: '#898989'}}>Product before</p>
-                  <p className={classes.text_16} style={{color: '#0c045d'}}>Product name</p>
+                  <p className={classes.text_16} style={{color: '#0c045d'}}>{productData?.name}</p>
                   <p className={classes.text_16} style={{color: '#898989'}}>Product after</p>
                 </Box>
                 <Box sx={{ p: 1}}>
@@ -86,9 +86,7 @@ const TopSection = () => {
               </Box>
 
               <Box p={2} m={1}>
-                <p className={classes.text_18}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </p>
-                <p className={classes.text_18}>Aenean commodo ligula eget dolor. </p>
-                <p className={classes.text_18}>This is paroduct title/short description. </p>
+                <p className={classes.text_18}><div dangerouslySetInnerHTML={{ __html: productData?.description }} /></p>
               </Box>
               
               <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center',  p: 1, m: 1 }} >
@@ -156,7 +154,7 @@ const TopSection = () => {
             <Grid item sm={4} md={6}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }} >
                 <Box>
-                <img src="/img/products/product.png" />
+                <img src={productData?.photo?.publicUrl} style={{ height: '280px', width: '100%', objectFit: 'cover'}}/>
                 </Box>
               </Box>
               <Box>
@@ -185,7 +183,7 @@ const TopSection = () => {
                 <p className={classes.text_16}  style={{color: '#898989'}}>-</p>
               </Box>
               <Box sx={{ p: 1}}>
-                <p className={classes.text_16}  style={{color: '#0c045d'}}>Product Name</p>
+                <p className={classes.text_16}  style={{color: '#0c045d'}}>{productData?.name}</p>
               </Box>
             </Box>
 
@@ -204,7 +202,7 @@ const TopSection = () => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', p: 1, m: 1 }} >
               <Box sx={{ p: 1 }}>
                 <p className={classes.text_16} style={{color: '#898989'}}>Product before</p>
-                <p className={classes.text_16} style={{color: '#0c045d'}}>Product name</p>
+                <p className={classes.text_16} style={{color: '#0c045d'}}>{productData?.name}</p>
                 <p className={classes.text_16} style={{color: '#898989'}}>Product after</p>
               </Box>
               <Box sx={{ p: 1}}>
@@ -216,9 +214,7 @@ const TopSection = () => {
             </Box>
 
             <Box p={2} m={1}>
-              <p className={classes.text_18}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </p>
-              <p className={classes.text_18}>Aenean commodo ligula eget dolor. </p>
-              <p className={classes.text_18}>This is paroduct title/short description. </p>
+              <p className={classes.text_18}><div dangerouslySetInnerHTML={{ __html: productData?.description }} /></p>
             </Box>
             
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center',  p: 1, m: 1 }} >

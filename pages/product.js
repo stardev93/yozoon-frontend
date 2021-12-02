@@ -31,6 +31,7 @@ import GridItem from "components/Grid/GridItem.js";
 
 
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import BestProducts from 'pages-sections/HomePage-Sections/BestProducts';
 import NewAddedProducts from 'pages-sections/HomePage-Sections/NewAddedProducts';
 import TradingRatedProducts from 'pages-sections/HomePage-Sections/TradingRatedProducts';
 import BestSalesProducts from 'pages-sections/HomePage-Sections/BestSalesProducts';
@@ -38,6 +39,10 @@ import TopSection from 'pages-sections/Product-Sections/TopSection';
 
 import useTranslation from '../hooks/useTranslation';
 import { container } from "styles/jss/nextjs-material-kit.js";
+
+import { useQuery } from '@apollo/client';
+import { SINGLE_PRODUCT_QUERY } from 'lib/queries';
+
 
 const useStyles = makeStyles((theme) => ({
   container,
@@ -313,30 +318,24 @@ const ProductWithPriceCard = () => {
 
 
 export default function Product({query}) {
+  console.log(query)
+  const id = query.id;
   const classes = useStyles();
+
+  const { data: productData, loading: loadingData, error } = useQuery(SINGLE_PRODUCT_QUERY, {
+    variables: { id },
+  });
   
     return (
       <HomeContainer>
-
-        {/* <Box style={{width: '100%'}}>
-          <Box position="relative" style={{marginTop: 50}}>
-            <HeaderMenu
-              brand={<img src="/img/logo-top.png" style={{height: 130, width: 100}} />}
-              rightLinks={<HeaderLinks />}
-              fixed
-              color="transparent"
-              changeColorOnScroll={{
-                height: 400,
-                color: "white",
-              }}
-            />
-          </Box> 
-        </Box> */}
-        
         <Box className={classNames(classes.container, classes.mainLayout)} >
-          <TopSection />
+          {
+            productData?.Product &&
+            <TopSection productData={productData?.Product} />
+          }
         </Box>
-   
+
+        <BestProducts />
         
         <Box className={classNames(classes.container, classes.otherProducts)}  style={{paddingTop: 100}}>
           <Box
@@ -374,7 +373,7 @@ export default function Product({query}) {
         </Box>
 
         <Box className={classNames(classes.container, classes.otherProducts)} >
-          <NewAddedProducts products={newAddedProducts}/>
+          <NewAddedProducts />
         </Box>
 
         <Box 
@@ -388,11 +387,11 @@ export default function Product({query}) {
             backgroundPosition: 'center',
           }}
         >
-          <TradingRatedProducts  products={newAddedProducts}/>
+          <TradingRatedProducts />
         </Box>
 
         <Box className={classNames(classes.container, classes.otherProducts)} >
-          <BestSalesProducts products={newAddedProducts}/>
+          <BestSalesProducts />
         </Box>
 
       </HomeContainer>

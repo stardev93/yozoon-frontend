@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 // import Link from "next/link";
 import { Box, Grid, makeStyles, useTheme, useMediaQuery, Typography, Button, Hidden } from '@material-ui/core';
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
-
 import Slider from "react-slick";
+
+import { useQuery } from '@apollo/client';
+import { TRADING_RATED_PRODUCTS_QUERY } from 'lib/queries';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TradingRatedProducts = ({products}) => {
+const TradingRatedProducts = () => {
   const classes = useStyles();
   const theme = useTheme();
   const lgDevice = useMediaQuery(theme.breakpoints.down('lg'));
@@ -80,6 +82,12 @@ const TradingRatedProducts = ({products}) => {
   const xsDevice = useMediaQuery(theme.breakpoints.down('xs'));
   
   const [slidesToShow, setSlidesToShow] = useState(0);
+  const { data: productsData } = useQuery(TRADING_RATED_PRODUCTS_QUERY, {
+    variables: {
+      skip: 0,
+      first: 10,
+    },
+  });
 
   useEffect(() => {
     // other code
@@ -89,19 +97,21 @@ const TradingRatedProducts = ({products}) => {
 
   useEffect(() => {
     // other code
-    if((products?.length > 0) && products?.length < 4) {
+    if((productsData?.allProducts?.length > 0) && productsData?.allProducts?.length < 4) {
       return lgDevice ? (mdDevice ? (xsDevice ? setSlidesToShow(1) : setSlidesToShow(2)) :setSlidesToShow(1)) :setSlidesToShow(1)
-    } else if(products?.length > 3) {
+    } else if(productsData?.allProducts?.length > 3) {
       return lgDevice ? (mdDevice ? (xsDevice ? setSlidesToShow(1) : setSlidesToShow(2)) :setSlidesToShow(2)) :setSlidesToShow(2)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, lgDevice, mdDevice, xsDevice])
+  }, [productsData?.allProducts, lgDevice, mdDevice, xsDevice])
 
   return (
     <Box>
       <Hidden smDown>
         <Grid container>
           <Grid item xs={12} md={6} className={classes.column}>
+          {
+          (productsData?.allProducts?.length > 0) && 
             <Box>
               <Slider 
                 dots={false}
@@ -113,11 +123,11 @@ const TradingRatedProducts = ({products}) => {
                 autoplay={true}
                 rows={2}
               >
-                {products && products.map((data, i) =>
+                {productsData?.allProducts.map((product, i) =>
                   <div key={i}>
                       <div className={classes.border_style}>
                         <Box position="relative">
-                          <img alt="" src={data.url}  style={{width: '100%', marginTop: '15px'}} />
+                          <img alt={product?.name} src={product?.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
                         </Box>
                         <Box display="flex" p={1} >
                           <Box p={1} style={{height:50}}>
@@ -131,6 +141,7 @@ const TradingRatedProducts = ({products}) => {
                 )}
               </Slider>
             </Box>
+          }
           </Grid>
           <Grid item xs={12} md={6} className={classes.column}>
             <Box
@@ -193,6 +204,8 @@ const TradingRatedProducts = ({products}) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className={classes.column}>
+          {
+          (productsData?.allProducts?.length > 0) && 
             <Box>
               <Slider 
                 dots={false}
@@ -204,11 +217,11 @@ const TradingRatedProducts = ({products}) => {
                 autoplay={true}
                 rows={2}
               >
-                {products && products.map((data, i) =>
-                  <div key={i}>
+                {(productsData?.allProducts || []).map((product, index) =>
+                  <div key={index}>
                       <div className={classes.border_style}>
                         <Box position="relative">
-                          <img alt="" src={data.url}  style={{width: '100%', marginTop: '15px'}} />
+                          <img alt={product?.name} src={product?.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
                         </Box>
                         <Box display="flex" p={1} >
                           <Box p={1} style={{height:50}}>
@@ -222,6 +235,7 @@ const TradingRatedProducts = ({products}) => {
                 )}
               </Slider>
             </Box>
+          }
           </Grid>
         </Grid>
       </Hidden>
@@ -254,6 +268,8 @@ const TradingRatedProducts = ({products}) => {
               Aenean commodo ligula eget dolor. Aenean massa.
             </p>
           </Box>
+          {
+          (productsData?.allProducts?.length > 0) && 
           <Box>
             <Slider 
               dots={true}
@@ -264,11 +280,11 @@ const TradingRatedProducts = ({products}) => {
               slidesToShow={slidesToShow}
               autoplay={true}
             >
-              {products && products.map((data, i) =>
+              {productsData?.allProducts.map((data, i) =>
                 <div key={i}>
                     <div className={classes.border_style}>
                       <Box position="relative">
-                        <img alt="" src={data.url}  style={{width: '100%', marginTop: '15px'}} />
+                        <img alt={data?.name} src={data.phpto?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
                       </Box>
                       <Box display="flex" p={1} >
                         <Box p={1} style={{height:50}}>
@@ -282,6 +298,7 @@ const TradingRatedProducts = ({products}) => {
               )}
             </Slider>
           </Box>
+          }
         </Box>
         <Box>
           <Box
@@ -311,6 +328,8 @@ const TradingRatedProducts = ({products}) => {
               Aenean commodo ligula eget dolor. Aenean massa.
             </p>
           </Box>
+          {
+          (productsData?.allProducts?.length > 0) && 
           <Box>
             <Slider 
               dots={true}
@@ -321,11 +340,11 @@ const TradingRatedProducts = ({products}) => {
               slidesToShow={slidesToShow}
               autoplay={true}
             >
-              {products && products.map((data, i) =>
+              {productsData?.allProducts.map((data, i) =>
                 <div key={i}>
                     <div className={classes.border_style}>
                       <Box position="relative">
-                        <img alt="" src={data.url}  style={{width: '100%', marginTop: '15px'}} />
+                        <img alt={data?.name} src={data.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
                       </Box>
                       <Box display="flex" p={1} >
                         <Box p={1} style={{height:50}}>
@@ -339,6 +358,7 @@ const TradingRatedProducts = ({products}) => {
               )}
             </Slider>
           </Box>
+        }
         </Box>
       </Hidden>
 
