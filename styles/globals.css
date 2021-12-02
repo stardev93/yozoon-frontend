@@ -1,0 +1,112 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #ffffff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.gradient-box {
+  
+  display: flex;
+  align-items: center;
+  width: 175px;
+  /* margin: auto; */
+  /* max-width: 22em; */
+
+  position: relative;
+  /* padding: 30% 2em; */
+  box-sizing: border-box;
+
+  color: #FFF;
+  background: #000;
+  background-clip: padding-box; /* !importanté */
+  border: solid 3px transparent; /* !importanté */
+  border-radius: 5px;
+  z-index: 999
+
+}
+.gradient-box::before {
+  content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 1;
+    margin: -2px; /* !importanté */
+    border-radius: inherit; /* !importanté */
+    background: linear-gradient(to right, #FF00FF, #6A00FF);
+}
+
+.slick-dots li.slick-active button:before {
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+  top: -3px;
+  border-radius: 20px;
+  background-color: #FF00FF;
+}
+
+.slick-dots li button::before {
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  border-style: solid;
+  border-color: magenta;
+}
+
+
+.gradientButtonTag {
+  font-family: "ITC Ronda";
+  font-size: 18px !important;
+  padding: 7px 35px !important;
+  text-align: center;
+  color: white !important;
+  text-transform: capitalize !important;
+  transition: 0.5s;
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  width: max-content;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 20px !important;
+  background-image: linear-gradient(to right, #fd29fd 0%, #b329fd 40%, #7400FF 100%)
+}
+
+
+.gradientButtonBuy {
+  font-family: "ITC Ronda";
+  margin-top: '40px';
+  font-size: 17px !important;
+  padding: 13px 35px !important;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: #FFF !important;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  width: max-content;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 10px;
+  background-image: linear-gradient(to right, #A800FF 0%, #7400FF 40%, #7400FF 100%);
+}
+
+
+
+@import url(//db.onlinewebfonts.com/c/e4c8318ba2d7dcf9a7eec8d56346dedb?family=ITC+Ronda);
+
