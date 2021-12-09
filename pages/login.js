@@ -90,109 +90,103 @@ export default function LoginPage(props) {
   }, [user])
 
   return (
-    <HomeContainer>
-      <div>
-        <div
-          className={classes.pageHeader}
-        >
-          <div className={classes.container}>
-            <GridContainer justify="center">
-              <GridItem xs={12} sm={6} md={4}>
-                <Card className={classes[cardAnimaton]}>
-                  <form className={classes.form} onSubmit={handleSubmit}>
-                    <CardHeader color="primary" className={classes.cardHeader}>
-                      <h4>Login</h4>
-                      <div className={classes.socialLine}>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className={"fab fa-twitter"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className={"fab fa-facebook"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className={"fab fa-google-plus-g"} />
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <p className={classes.divider}>Or Be Classical</p>
-                    <CardBody>
-                      <CustomInput
-                        required={true}
-                        labelText="Email..."
-                        type='email'
-                        name='email'
-                        value={inputs.email}
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
-                        inputProps={{
-                          type: "email",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          ),
-                        }}
-                        onChange={handleChange}
-                      />
-                      <CustomInput
-                        required={true}
-                        labelText="Password"
-                        type='password'
-                        name="password"
-                        value={inputs.password}
-                        formControlProps={{
-                          fullWidth: true,
-                        }}
-                        inputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
-                            </InputAdornment>
-                          ),
-                          autoComplete: "off",
-                        }}
-                        onChange={handleChange}
-                      />
-                    </CardBody>
-                    <CardFooter className={classes.cardFooter}>
-                      <Button 
-                        type="submit"
-                        simple 
-                        color="primary" 
-                        size="lg"
-                        // onClick={()=>Router.push("/admin/dashboard")}
-                      >
-                        Login
-                      </Button>
-                    </CardFooter>
-                  </form>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </div>
-        </div>
+    <div className={classes.pageHeader}>
+      <div className={classes.container}>
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={6} md={4}>
+            <Card className={classes[cardAnimaton]}>
+              <form className={classes.form} onSubmit={handleSubmit}>
+                <CardHeader color="primary" className={classes.cardHeader}>
+                  <h4>Login</h4>
+                  <div className={classes.socialLine}>
+                    <Button
+                      justIcon
+                      href="#pablo"
+                      target="_blank"
+                      color="transparent"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <i className={"fab fa-twitter"} />
+                    </Button>
+                    <Button
+                      justIcon
+                      href="#pablo"
+                      target="_blank"
+                      color="transparent"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <i className={"fab fa-facebook"} />
+                    </Button>
+                    <Button
+                      justIcon
+                      href="#pablo"
+                      target="_blank"
+                      color="transparent"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <i className={"fab fa-google-plus-g"} />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <p className={classes.divider}>Or Be Classical</p>
+                <CardBody>
+                  <CustomInput
+                    required={true}
+                    labelText="Email..."
+                    type='email'
+                    name='email'
+                    value={inputs.email}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: "email",
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Email className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={handleChange}
+                  />
+                  <CustomInput
+                    required={true}
+                    labelText="Password"
+                    type='password'
+                    name="password"
+                    value={inputs.password}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon className={classes.inputIconsColor}>
+                            lock_outline
+                          </Icon>
+                        </InputAdornment>
+                      ),
+                      autoComplete: "off",
+                    }}
+                    onChange={handleChange}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button 
+                    type="submit"
+                    simple 
+                    color="primary" 
+                    size="lg"
+                    // onClick={()=>Router.push("/admin/dashboard")}
+                  >
+                    Login
+                  </Button>
+                </CardFooter>
+              </form>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    </HomeContainer>
+    </div>
   );
 }

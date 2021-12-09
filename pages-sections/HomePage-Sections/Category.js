@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Link from "next/link";
+import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
-import { List, ListItem, Box, useTheme, useMediaQuery } from '@material-ui/core';
+import { List, ListItem, Box } from '@material-ui/core';
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import headerLinksStyle from "styles/jss/nextjs-material-kit/components/headerLinksStyle.js";
 
+import useTranslation from 'hooks/useTranslation';
 
 const useStyles = makeStyles(headerLinksStyle);
 
-
 const Category = ({categories, parent, setParent, sub, setSub}) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    // other code
-    // if(parent && !sub) {
-    //   setSub(parent?.sub)
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parent, sub])
-
+  const { t } = useTranslation();
   return (
     <Box>
       <Box>
@@ -34,7 +25,7 @@ const Category = ({categories, parent, setParent, sub, setSub}) => {
             textAlign: 'left',
           }}
         >
-          Categories
+          {t('categories')}
         </p>
       </Box>
       <List className={classes.list}>
@@ -67,7 +58,6 @@ const Category = ({categories, parent, setParent, sub, setSub}) => {
                 className: classes.navLink,
                 color: "transparent",
               }}
-              // buttonIcon={Apps}
               dropdownList={
                 (parent?.sub || []).map((tmp, index) => [
                   <a key={index} className={classes.dropdownLink} onClick={()=>setSub(tmp)}>{tmp?.name}</a>

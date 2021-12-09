@@ -36,6 +36,7 @@ const TopSection = ({ productData }) => {
   useEffect(() => {
     // other code
     console.log("----------------------productData", productData)
+   // if(productData?.name) localStorage.setItem()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productData])
 
@@ -73,9 +74,9 @@ const TopSection = ({ productData }) => {
 
               <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', p: 1, m: 1 }} >
                 <Box sx={{ p: 1 }}>
-                  <p className={classes.text_16} style={{color: '#898989'}}>Product before</p>
+                  <p className={classes.text_16} style={{color: '#898989', cursor: 'pointer'}}>Product before</p>
                   <p className={classes.text_16} style={{color: '#0c045d'}}>{productData?.name}</p>
-                  <p className={classes.text_16} style={{color: '#898989'}}>Product after</p>
+                  <p className={classes.text_16} style={{color: '#898989', cursor: 'pointer'}}>Product after</p>
                 </Box>
                 <Box sx={{ p: 1}}>
                   <Button variant="contained" className="gradientButtonTag">Best Screen</Button>
@@ -154,7 +155,7 @@ const TopSection = ({ productData }) => {
             <Grid item sm={4} md={6}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }} >
                 <Box>
-                <img src={productData?.photo?.publicUrl} style={{ height: '280px', width: '100%', objectFit: 'cover'}}/>
+                <img src={productData?.photo?.publicUrl} style={{ height: '280px', width: '100%', objectFit: 'cover', borderRadius: '30px'}}/>
                 </Box>
               </Box>
               <Box>

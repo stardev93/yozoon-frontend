@@ -212,60 +212,60 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Index() {
   const classes = useStyles();
-  
-    return (
-      <HomeContainer>
-        <Box>
-          <Box style={{width: '100%'}}>
-            <Box position='relative' >
-              <Box position='relative' style={{textAlign: 'center'}}>
-                <img
-                  src="/img/nextjs_header.png"
-                  className={classes.image}
-                  style={{width: '100%', marginTop: 65}}
-                  alt='item'
-                />
-              </Box>       
-            </Box>
-          </Box>
-          
-          <Box className={classes.bannerTitle}>
-            <GridContainer>
-              <GridItem>
-                <div className={classes.brand}>
-                  <h1 className={classes.title}>Shop Confidently using </h1>
-                  <h1 className={classes.title}>unbiased AI Aggragated reviews</h1>
-                  <Button variant="contained" className={classNames(classes.gradientButton, classes.gradientButton1)}>BROWSE CATEGORIES</Button>
-                </div>
-              </GridItem>
-            </GridContainer>
-          </Box>
-
-          <BestProducts />
-         
-          <Box className={classNames(classes.container, classes.otherProducts)} >
-            <NewAddedProducts />
-          </Box>
-
-          <Box 
-            className={classNames(classes.container, classes.otherProducts, classes.responsivePadding)} 
-            style={{
-              backgroundImage: "url('/img/products/mid-sec.png')", 
-              backgroundRepeat: 'no-repeat',
-              // height: '1425px',
-              height: 'max-content',
-              backgroundSize: 'cover', 
-              backgroundPosition: 'center',
-            }}
-          >
-            <TradingRatedProducts />
-          </Box>
-
-          <Box className={classNames(classes.container, classes.otherProducts)} >
-            <BestSalesProducts />
+  const { t } = useTranslation();
+  return (
+    <HomeContainer>
+      <Box>
+        <Box style={{width: '100%'}}>
+          <Box position='relative' >
+            <Box position='relative' style={{textAlign: 'center'}}>
+              <img
+                src="/img/nextjs_header.png"
+                className={classes.image}
+                style={{width: '100%', marginTop: 65}}
+                alt='item'
+              />
+            </Box>       
           </Box>
         </Box>
-      </HomeContainer>
-    );
+        
+        <Box className={classes.bannerTitle}>
+          <GridContainer>
+            <GridItem>
+              <div className={classes.brand}>
+                <h1 className={classes.title}>Shop Confidently using </h1>
+                <h1 className={classes.title}>unbiased AI Aggragated reviews</h1>
+                <Button variant="contained" className={classNames(classes.gradientButton, classes.gradientButton1)}>{t('browse_categories')}</Button>
+              </div>
+            </GridItem>
+          </GridContainer>
+        </Box>
+
+        <BestProducts />
+        
+        <Box className={classNames(classes.container, classes.otherProducts)} >
+          <NewAddedProducts />
+        </Box>
+
+        <Box 
+          className={classNames(classes.container, classes.otherProducts, classes.responsivePadding)} 
+          style={{
+            backgroundImage: "url('/img/products/mid-sec.png')", 
+            backgroundRepeat: 'no-repeat',
+            // height: '1425px',
+            height: 'max-content',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+          }}
+        >
+          <TradingRatedProducts />
+        </Box>
+
+        <Box className={classNames(classes.container, classes.otherProducts)} >
+          <BestSalesProducts />
+        </Box>
+      </Box>
+    </HomeContainer>
+  );
 
 }

@@ -6,13 +6,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Grid,useTheme, Card, Hidden } from '@material-ui/core';
 
 // core components
+import Category from './Category'
+
 import headerLinksStyle from "styles/jss/nextjs-material-kit/components/headerLinksStyle.js";
 import { container } from "styles/jss/nextjs-material-kit.js";
 
-
-import Category from './Category'
-
 import { ALL_CATEGORIES_QUERY, BEST_PRODUCTS_QUERY } from 'lib/queries';
+import useTranslation from 'hooks/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   container,
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
-
+  
   return (
     <Box>
       <Card className={classes.card}>
@@ -127,10 +127,9 @@ const ProductCard = ({ product }) => {
 
 const BestProducts = () => {
   const classes = useStyles();
-  const theme = useTheme();
+  const { t } = useTranslation();
 
   const { data: categoriesData } = useQuery(ALL_CATEGORIES_QUERY);
-
   const { data: productsData } = useQuery(BEST_PRODUCTS_QUERY, {
     variables: {
       skip: 0,
@@ -150,12 +149,6 @@ const BestProducts = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoriesData])
-
-  useEffect(() => {
-    // other code
-    console.log("--------------------BestProductsData", productsData)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productsData])
 
   return (
     <Box className={classNames(classes.container, classes.best3TopProducts)} >
@@ -178,7 +171,7 @@ const BestProducts = () => {
           />
         </Box>
         <Box sx={{ p: 1}}>
-          <p className={classes.title_50}>Best 3 Products</p>
+          <p className={classes.title_50}>{t('best_3_products')}</p>
         </Box>
       </Box>
       <Grid container spacing={4}>

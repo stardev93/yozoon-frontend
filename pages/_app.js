@@ -15,8 +15,6 @@ import "styles/scss/nextjs-material-kit.scss?v=1.2.0";
 import "styles/globals.css";
 
 
-
-
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
   document.body.classList.add("body-page-transition");
@@ -41,7 +39,7 @@ class MyApp extends App {
   componentDidMount() {
     let comment = document.createComment(`
 =========================================================
-* Yozoon using NextJS Material Kit
+* Yozoon using NextJS Material UI
 =========================================================
 * Product Page: https://yozoon.com/
 * Copyright 2021 Star Team

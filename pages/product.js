@@ -18,6 +18,8 @@ import {
   Hidden
 } from '@material-ui/core';
 // @material-ui/icons
+import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+
 // core components
 import HomeContainer from "components/HomeContainer";
 import Header from "components/Header/Header.js";
@@ -29,8 +31,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 // sections for this page
 
-
-import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import BestProducts from 'pages-sections/HomePage-Sections/BestProducts';
 import NewAddedProducts from 'pages-sections/HomePage-Sections/NewAddedProducts';
 import TradingRatedProducts from 'pages-sections/HomePage-Sections/TradingRatedProducts';
@@ -233,56 +233,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
-const newAddedProducts = [
-  {
-    'id': 1,
-    'title': 'TEST1',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-  {
-    'id': 2,
-    'title': 'TEST2',
-    'url': '/img/products/top1.png',
-    'price': '300',
-    'symbole': '$'
-  },
-  {
-    'id': 3,
-    'title': 'TEST3',
-    'url': '/img/products/top1.png',
-    'price': '150',
-    'symbole': '$'
-  },
-  {
-    'id': 4,
-    'title': 'TEST4',
-    'url': '/img/products/top1.png',
-    'price': '1100',
-    'symbole': '$'
-  },
-  {
-    'id': 5,
-    'title': 'TEST5',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-  {
-    'id': 6,
-    'title': 'TEST6',
-    'url': '/img/products/top1.png',
-    'price': '100',
-    'symbole': '$'
-  },
-]
-
-
 const ProductWithPriceCard = () => {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   return (
     <Box>
       <Card className={classes.card}>
@@ -331,7 +284,7 @@ export default function Product({query}) {
         <Box className={classNames(classes.container, classes.mainLayout)} >
           {
             productData?.Product &&
-            <TopSection productData={productData?.Product} />
+              <TopSection productData={productData?.Product} />
           }
         </Box>
 

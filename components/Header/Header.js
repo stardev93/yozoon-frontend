@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Router from "next/router";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-
-import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -16,22 +13,24 @@ import {
   Hidden,
   Box,
   Grid,
-  TextField,
-  Paper,
-  InputAdornment,
   List,
   ListItem,
 } from "@material-ui/core";
-
 // @material-ui/icons
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 // core components
 import LanguageDropdown from "components/CustomDropdown/LanguageDropdown.js";
 import CustomDropdown from 'components/CustomDropdown/CustomDropdown';
 import HeaderLinksMobile from "./HeaderLinksMobile.js";
+import Sign from './Sign';
+import Search from './Search';
 import styles from "styles/jss/nextjs-material-kit/components/headerStyle.js";
 
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import { useUser, CURRENT_USER_QUERY } from '../User';
+
+import useTranslation from 'hooks/useTranslation';
 
 const SIGNOUT_MUTATION = gql`
   mutation {
@@ -45,30 +44,43 @@ const useStyles = makeStyles(styles);
 export default function Header(props) {
   const classes = useStyles();
   const user = useUser();
+  const { t, setLocale } = useTranslation();
   
   const [signout] = useMutation(SIGNOUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
 
-  const [display, setDisplay] = React.useState("block"); //none
-  const [backColor, setBackColor] = React.useState("#0C045D !important"); //none
+  const { color, rightLinks, leftLinks, fixed, absolute, changeColorOnScroll } = props;
+  const [display, setDisplay] = useState("block"); //none
+  const [backColor, setBackColor] = useState("#0C045D !important"); //none
+  const [scroll, setScroll] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
-  React.useEffect(() => {
-    if (props.changeColorOnScroll) {
+  useEffect(() => {
+    if (changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
     }
     return function cleanup() {
-      if (props.changeColorOnScroll) {
+      if (changeColorOnScroll) {
         window.removeEventListener("scroll", headerColorChange);
       }
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    // other code
+    console.log("---------------------------------backColor", backColor);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [backColor])
 
   const headerColorChange = () => {
-    const { color, changeColorOnScroll } = props;
     const windowsScrollTop = window.pageYOffset;
+    // console.log("---------------------classes[color]", classes[color])
+    // console.log("---------------------classes[color]", classes[color])
     if (windowsScrollTop > changeColorOnScroll.height) {
-      setDisplay("none")
+      setDisplay("none");
+      setScroll(true);
+      setShowSearch(false);
       document.body
         .getElementsByTagName("header")[0]
         .classList.remove(classes[color]);
@@ -76,7 +88,9 @@ export default function Header(props) {
         .getElementsByTagName("header")[0]
         .classList.add(classes[changeColorOnScroll.color]);
     } else {
-      setDisplay("block")
+      setDisplay("block");
+      setScroll(false);
+      setShowSearch(false);
       document.body
         .getElementsByTagName("header")[0]
         .classList.add(classes[color]);
@@ -86,7 +100,7 @@ export default function Header(props) {
     }
     setBackColor("#0C045D !important")
   };
-  const { color, rightLinks, leftLinks, brand, fixed, absolute } = props;
+  
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,
@@ -96,7 +110,13 @@ export default function Header(props) {
   
   const brandComponent = (
     <Link href="/" as="/">
-      <Button className={classes.title}>{brand}</Button>
+      <Button className={classes.title}>
+        <img src="/img/logo-top.png" style={{height: scroll? 70 : 130}} /> 
+        <span style={{
+          width: 50,
+        }}>
+        </span>
+      </Button>
     </Link>
   );
 
@@ -109,33 +129,14 @@ export default function Header(props) {
   //#0C045D
   return (
     <AppBar className={appBarClasses}>
-      <Box p={1} style={{ backgroundColor: backColor, display: display }} >
+      <Box key="top" p={1} style={{ backgroundColor: '#0C045D !important', display: display }} >
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <Grid container spacing={2}>
               <Grid item md={3}>
               </Grid>
               <Grid item md={6}>
-                <Paper elevation={1} className={classes.searchBox}>
-                  <TextField
-                    fullWidth
-                    type="search"
-                    variant="outlined"
-                    placeholder="Search"
-                    disableunderline="false"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end" style={{cursor: 'pointer'}}>
-                            <img src="/img/buttons/searchbox_btn.png" />
-                        </InputAdornment>
-                      ),
-                      classes:{
-                        notchedOutline:classes.noBorder,
-                        input: classes.inputSearch
-                      }
-                    }}
-                  />
-                </Paper>
+                <Search />
               </Grid>
 
               <Grid item md={3}>
@@ -146,28 +147,8 @@ export default function Header(props) {
                     justifyContent: 'flex-start'
                   }}
                 >
-                  {!user && (
-                    <Box className="gradient-box">
-                      <Box className={classes.gradientSignBox}>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                        >
-                          <Box>
-                            <img src="/img/buttons/user_btn.png" />
-                          </Box>
-                          <Box>
-                            <ButtonGroup style={{color: '#FFFFFF'}} variant="text" aria-label="text button group">
-                              <Button className={classes.authButton} onClick={()=>Router.push("/login")}>Login</Button>
-                              <Button className={classes.authButton}>Sign Up</Button>
-                            </ButtonGroup>
-                          </Box>
-                        </Box>    
-                      </Box>
-                    </Box>
+                  {(!user && !scroll) && (
+                    <Sign />
                   )}
                   <Box>
                     <ListItem className={classes.listItem}>
@@ -181,10 +162,10 @@ export default function Header(props) {
                         }}
                         buttonIcon={KeyboardArrowDownIcon}
                         dropdownList={[
-                          <Button className={classes.dropdownLink}>
+                          <Button className={classes.dropdownLink} onClick={()=>setLocale('en')}>
                             EN
                           </Button>,
-                          <Button className={classes.dropdownLink}>
+                          <Button className={classes.dropdownLink}  onClick={()=>setLocale('de')}>
                             DE
                           </Button>,
                         ]}
@@ -214,10 +195,10 @@ export default function Header(props) {
                             }}
                             dropdownList={[
                               <Button size="small" className={classes.dropdownLink1} style={{textTransform: 'capitalize', padding: '0px', textAlign: 'left'}} onClick={()=>Router.push("/admin/dashboard")} >
-                              Dashboard
+                                {t('dashboard')}
                               </Button>,
                               <Button size="small" className={classes.dropdownLink1} style={{textTransform: 'capitalize', padding: '0px', textAlign: 'left'}} onClick={signout} >
-                              Sign out
+                                {t('logout')}
                               </Button>,
                             ]}
                           />
@@ -247,8 +228,8 @@ export default function Header(props) {
                         </Box>
                         <Box>
                           <ButtonGroup style={{color: '#FFFFFF'}} variant="text" aria-label="text button group">
-                            <Button className={classes.authButton} onClick={()=>Router.push("/login")}>Login</Button>
-                            <Button className={classes.authButton} >Sign Up</Button>
+                            <Button className={classes.authButton} onClick={()=>Router.push("/login")}>{t('login')}</Button>
+                            <Button className={classes.authButton} >{t('signUp')}</Button>
                           </ButtonGroup>
                         </Box>
                       </Box>    
@@ -268,10 +249,10 @@ export default function Header(props) {
                         }}
                         buttonIcon={KeyboardArrowDownIcon}
                         dropdownList={[
-                          <Button className={classes.dropdownLink} style={{width: '30px'}}>
+                          <Button className={classes.dropdownLink} style={{width: '30px'}}  onClick={()=>setLocale('en')}>
                             EN
                           </Button>,
-                          <Button className={classes.dropdownLink} style={{width: '30px'}}>
+                          <Button className={classes.dropdownLink} style={{width: '30px'}}  onClick={()=>setLocale('de')}>
                             DE
                           </Button>,
                         ]}
@@ -284,19 +265,49 @@ export default function Header(props) {
           </Hidden>
         </Toolbar>
       </Box>
-      <Box>
+      <Box key="other">
         <Toolbar className={classes.container}>
           <Hidden smDown>
-            <Grid container>
-              <Grid item md={3}> 
-                {brandComponent}
-              </Grid>
-              <Grid item md={9}>
-                <Box style={{marginTop: '30px', marginLeft: '-0.9375rem'}}>
-                  {rightLinks}
+            <Box display="flex" style={{width: '100%'}}>
+              <Box flexGrow={1}>
+                <Box>
+                  <Box display="flex" flexDirection="row">
+                    <Box>
+                      {brandComponent}
+                    </Box>
+                    {
+                      !showSearch &&
+                      <Box >
+                        <Box style={{marginTop: scroll ? '15px' : '30px', marginLeft: '-0.9375rem'}}>
+                          {rightLinks}
+                        </Box>
+                      </Box>
+                    }
+                  </Box>
                 </Box>
-              </Grid>
-            </Grid>
+              </Box>
+              {
+                (scroll && showSearch) &&
+                  <Box style={{width: '500px', paddingTop: '13px'}}>
+                    <Search />
+                  </Box>
+              }
+              {(!user && scroll) && (
+                <Box pt={2}>
+                  <Sign />
+                </Box>
+              )}
+              
+              {
+                scroll &&
+                <Box pt={2}>
+                  <Button onClick={()=>setShowSearch(!showSearch)} style={{textTransform: 'none'}}><img src="/img/buttons/searchbox_btn.png" />{t('find')}</Button>
+                </Box>
+              }
+              
+            </Box>
+
+            
           </Hidden>
           <Hidden mdUp>
             <Grid container>
@@ -334,7 +345,6 @@ Header.propTypes = {
   ]),
   rightLinks: PropTypes.node,
   leftLinks: PropTypes.node,
-  brand: PropTypes.string,
   fixed: PropTypes.bool,
   absolute: PropTypes.bool,
   // this will cause the sidebar to change the color from

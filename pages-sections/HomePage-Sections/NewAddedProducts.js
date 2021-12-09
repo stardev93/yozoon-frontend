@@ -5,6 +5,7 @@ import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import Slider from "react-slick";
 import { useQuery } from '@apollo/client';
 import { NEW_ADDED_PRODUCTS_QUERY } from 'lib/queries';
+import useTranslation from 'hooks/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,44 +41,45 @@ const useStyles = makeStyles((theme) => ({
   },
   border_style: {
     margin: 20,
-    padding: '15px 15px 0px 15px',
+    // padding: '15px 15px 0px 15px',
     border: '2px solid #f5f5f5',
-    borderRadius: 40
+    borderRadius: 30,
   },
   border_btn: {
     borderWidth: '2px',
     borderColor: '#6A00FF',
     padding: '10px 30px',
     color: '#6A00FF',
-    width: '160px',
+    width: 'max-content',
     height: '50px',
     fontSize: '17px',
     fontFamily: "ITC Ronda",
+  },
+  img: {
+    width: '100%', 
+    height: '200px', 
+    cursor: 'pointer',
+    borderRadius: 30,
   }
 }));
 
 
 const NewAddedProducts = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const theme = useTheme();
   const lgDevice = useMediaQuery(theme.breakpoints.down('lg'));
   const mdDevice = useMediaQuery(theme.breakpoints.down('md'));
   const xsDevice = useMediaQuery(theme.breakpoints.down('xs'));
   
+  const [slidesToShow, setSlidesToShow] = useState(0);
+
   const { data: productsData } = useQuery(NEW_ADDED_PRODUCTS_QUERY, {
     variables: {
       skip: 0,
       first: 20,
     },
   });
-
-  const [slidesToShow, setSlidesToShow] = useState(0);
-
-  useEffect(() => {
-    // other code
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     // other code
@@ -109,7 +111,7 @@ const NewAddedProducts = () => {
           />
         </Box>
         <Box sx={{ p: 1}}>
-          <p className={classes.title_50}>New Added Products</p>
+          <p className={classes.title_50}>{t('new_added_products')}</p>
         </Box>
       </Box>
       <Box>
@@ -127,23 +129,23 @@ const NewAddedProducts = () => {
             {productsData?.allProducts.map((data, i) =>
               <div key={i}>
                   <div className={classes.border_style}>
-                    <Box position="relative">
+                    <Box>
                       <img 
                         alt={data?.name} 
+                        className={classes.img}
                         src={data?.photo?.publicUrl}  
-                        style={{width: '100%', marginTop: '15px', cursor: 'pointer'}} 
                         onClick={()=>
                           Router.push(`/product?id=${data.id}`)
                         }
                       />
                     </Box>
-                    <Box display="flex" p={1} >
+                    {/* <Box display="flex" p={1} >
                       <Box p={1} style={{height:50}}>
                         <Typography variant="body2" component="h2">
-                          {/* {data.title} */}
+                          {data.name}
                         </Typography>
                       </Box>
-                    </Box>
+                    </Box> */}
                   </div>
               </div>
             )}
@@ -151,7 +153,7 @@ const NewAddedProducts = () => {
         }
         <Box m={2} p={2} textAlign="center">
           <Button variant="outlined" endIcon={<ArrowRightAltIcon />} className={classes.border_btn}>
-            View All
+            {t('view_all')}
           </Button>
         </Box>
       </Box>

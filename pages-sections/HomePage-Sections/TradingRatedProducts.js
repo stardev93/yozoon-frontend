@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 // import Link from "next/link";
-import { Box, Grid, makeStyles, useTheme, useMediaQuery, Typography, Button, Hidden } from '@material-ui/core';
-import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import { Box, Grid, makeStyles, useTheme, useMediaQuery, Typography, Hidden } from '@material-ui/core';
 import Slider from "react-slick";
 
 import { useQuery } from '@apollo/client';
 import { TRADING_RATED_PRODUCTS_QUERY } from 'lib/queries';
+import useTranslation from 'hooks/useTranslation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
   border_style: {
     margin: 20,
-    padding: '15px 15px 0px 15px',
+    padding: '15px 15px 15px 15px',
     border: '2px solid #f5f5f5',
     borderRadius: 15,
     backgroundColor: 'white'
@@ -68,14 +68,20 @@ const useStyles = makeStyles((theme) => ({
     height: '50px',
     fontSize: '17px',
     fontFamily: "ITC Ronda",
+  },
+  img: {
+    width: '100%', 
+    height: '200px', 
+    cursor: 'pointer',
+    borderRadius: 20,
   }
-
 
 }));
 
 
 const TradingRatedProducts = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const theme = useTheme();
   const lgDevice = useMediaQuery(theme.breakpoints.down('lg'));
   const mdDevice = useMediaQuery(theme.breakpoints.down('md'));
@@ -127,15 +133,15 @@ const TradingRatedProducts = () => {
                   <div key={i}>
                       <div className={classes.border_style}>
                         <Box position="relative">
-                          <img alt={product?.name} src={product?.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
+                          <img alt={product?.name} src={product?.photo?.publicUrl} className={classes.img} />
                         </Box>
-                        <Box display="flex" p={1} >
+                        {/* <Box display="flex" p={1} >
                           <Box p={1} style={{height:50}}>
                             <Typography variant="body2" component="h2">
-                              {/* {data.title} */}
+                              {data.name} 
                             </Typography>
                           </Box>
-                        </Box>
+                        </Box> */}
                       </div>
                   </div>
                 )}
@@ -162,7 +168,7 @@ const TradingRatedProducts = () => {
                 />
               </Box>
               <Box sx={{ p: 1}}>
-                <p className={classes.title_50} style={{color: 'white'}}>Trending Products</p>
+                <p className={classes.title_50} style={{color: 'white'}}>{t('trending_products')}</p>
                 <Box>
                   <p className={classes.text_18}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
@@ -193,7 +199,7 @@ const TradingRatedProducts = () => {
                 />
               </Box>
               <Box sx={{ p: 1}}>
-                <p className={classes.title_50} style={{color: 'white'}}>New Rated Products</p>
+                <p className={classes.title_50} style={{color: 'white'}}>{t('new_rated_products')}</p>
                 <Box>
                   <p className={classes.text_18}>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
@@ -221,15 +227,15 @@ const TradingRatedProducts = () => {
                   <div key={index}>
                       <div className={classes.border_style}>
                         <Box position="relative">
-                          <img alt={product?.name} src={product?.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
+                          <img alt={product?.name} src={product?.photo?.publicUrl} className={classes.img} />
                         </Box>
-                        <Box display="flex" p={1} >
+                        {/* <Box display="flex" p={1} >
                           <Box p={1} style={{height:50}}>
                             <Typography variant="body2" component="h2">
-                              {/* {data.title} */}
+                              {data.name}
                             </Typography>
                           </Box>
-                        </Box>
+                        </Box> */}
                       </div>
                   </div>
                 )}
@@ -259,7 +265,7 @@ const TradingRatedProducts = () => {
               />
             </Box>
             <Box>
-              <p className={classes.title_50} style={{color: 'white'}}>Trending Products</p>
+              <p className={classes.title_50} style={{color: 'white'}}>{t('trending_products')}</p>
             </Box>
           </Box>
           <Box>
@@ -284,15 +290,15 @@ const TradingRatedProducts = () => {
                 <div key={i}>
                     <div className={classes.border_style}>
                       <Box position="relative">
-                        <img alt={data?.name} src={data.phpto?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
+                        <img alt={data?.name} src={data.phpto?.publicUrl}  className={classes.img} />
                       </Box>
-                      <Box display="flex" p={1} >
+                      {/* <Box display="flex" p={1} >
                         <Box p={1} style={{height:50}}>
                           <Typography variant="body2" component="h2">
-                            {/* {data.title} */}
+                            {data.name}
                           </Typography>
                         </Box>
-                      </Box>
+                      </Box> */}
                     </div>
                 </div>
               )}
@@ -319,7 +325,7 @@ const TradingRatedProducts = () => {
               />
             </Box>
             <Box>
-              <p className={classes.title_50} style={{color: 'white'}}>New Rated Products</p>
+              <p className={classes.title_50} style={{color: 'white'}}>{t('new_rated_products')}</p>
             </Box>
           </Box>
           <Box>
@@ -344,15 +350,15 @@ const TradingRatedProducts = () => {
                 <div key={i}>
                     <div className={classes.border_style}>
                       <Box position="relative">
-                        <img alt={data?.name} src={data.photo?.publicUrl}  style={{width: '100%', marginTop: '15px'}} />
+                        <img alt={data?.name} src={data.photo?.publicUrl} className={classes.img} />
                       </Box>
-                      <Box display="flex" p={1} >
+                      {/* <Box display="flex" p={1} >
                         <Box p={1} style={{height:50}}>
                           <Typography variant="body2" component="h2">
-                            {/* {data.title} */}
+                            {data.name}
                           </Typography>
                         </Box>
-                      </Box>
+                      </Box> */}
                     </div>
                 </div>
               )}

@@ -167,6 +167,7 @@ const headerStyle = (theme) => ({
   },
   searchBox: {
     width: '72%',
+    minWidth: '480px',
     marginTop: '3px'
   },
   mobileSearchBox: {

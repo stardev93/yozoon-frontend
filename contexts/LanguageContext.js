@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 
-export const defaultLocale = 'pt';
-export const locales = ['pt', 'en'];
+export const defaultLocale = 'de';
+export const locales = ['de', 'en'];
 export const LanguageContext = createContext([]);
 
 export function LanguageProvider({ children }) {
-  const [locale, setLocale] = useState('pt');
+  const [locale, setLocale] = useState('en');
 
   useEffect(() => {
     if (!window) {

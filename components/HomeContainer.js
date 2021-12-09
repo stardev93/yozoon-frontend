@@ -6,7 +6,6 @@ export default function HomeContainer({ children }) {
   return (
     <div>
       <Header
-        brand={<img src="/img/logo-top.png" style={{height: 130, width: 100}} />}
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
